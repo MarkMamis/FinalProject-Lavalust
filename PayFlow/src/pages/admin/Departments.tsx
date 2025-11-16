@@ -15,6 +15,9 @@ interface Position {
   id: string;
   title: string;
   departmentId: string;
+  salary_grade?: number;
+  min_salary?: string;
+  max_salary?: string;
 }
 
 interface Department {
@@ -60,12 +63,15 @@ export default function Departments() {
         // Fetch positions for each department
         const departmentsWithPositions = await Promise.all(
           rows.map(async (dept: any) => {
-            const posRes = await fetch(`/api/positions?department_id=${dept.id}`, { credentials: 'include' });
+            const posRes = await fetch(`/api/positions?department_id=${dept.id}&with_salary=1`, { credentials: 'include' });
             const posData = await posRes.json().catch(() => ({ positions: [] }));
             const positions = (posData.positions || []).map((p: any) => ({
               id: String(p.id),
               title: p.title,
-              departmentId: String(p.department_id)
+              departmentId: String(p.department_id),
+              salary_grade: p.salary_grade ? Number(p.salary_grade) : undefined,
+              min_salary: p.min_salary,
+              max_salary: p.max_salary
             }));
             
             return {
@@ -101,14 +107,15 @@ export default function Departments() {
     setDepartments((prev) => [...prev, department]);
   };
 
-  const handleAddPosition = (departmentId: string, positionTitle: string) => {
+  const handleAddPosition = (departmentId: string, positionTitle: string, salaryGrade?: number) => {
     fetch('/api/positions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
       body: JSON.stringify({
         title: positionTitle,
-        department_id: departmentId
+        department_id: departmentId,
+        salary_grade: salaryGrade
       })
     })
       .then(async (res) => {
@@ -357,13 +364,27 @@ export default function Departments() {
                                 key={position.id}
                                 className="flex items-center justify-between p-3 pl-16 hover:bg-accent/30 transition-colors"
                               >
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-3 flex-1">
                                   <span className="text-sm font-medium text-muted-foreground w-8">
                                     #{index + 1}
                                   </span>
-                                  <span className="text-sm font-medium text-foreground">
-                                    {position.title}
-                                  </span>
+                                  <div className="flex-1">
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-sm font-medium text-foreground">
+                                        {position.title}
+                                      </span>
+                                      {position.salary_grade && (
+                                        <Badge variant="outline" className="text-xs">
+                                          SG {position.salary_grade}
+                                        </Badge>
+                                      )}
+                                    </div>
+                                    {position.min_salary && position.max_salary && (
+                                      <div className="text-xs text-muted-foreground mt-0.5">
+                                        ₱{parseFloat(position.min_salary).toLocaleString()} - ₱{parseFloat(position.max_salary).toLocaleString()}
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
                                 {canManageDepartments && (
                                   <div className="flex gap-1">

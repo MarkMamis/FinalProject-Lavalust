@@ -536,6 +536,7 @@ export default function Schedules() {
                     <div className="flex">
                       {/* Fixed Time Column */}
                       <div className="flex-shrink-0">
+                        {/* eslint-disable-next-line react/forbid-dom-props */}
                         <div className="grid gap-1" style={{ 
                           gridTemplateColumns: '80px',
                           gridAutoRows: '80px'
@@ -559,12 +560,14 @@ export default function Schedules() {
 
                       {/* Scrollable Days Grid */}
                       <div className="flex-1 overflow-x-auto">
+                        {/* eslint-disable-next-line react/forbid-dom-props */}
                         <div className="grid gap-1" style={{ 
                           gridTemplateColumns: 'repeat(6, 1fr)',
                           gridAutoRows: '80px',
                           minWidth: '600px'
                         }}>
                           {/* Header - Days */}
+                          {/* eslint-disable-next-line react/forbid-dom-props */}
                           <div className="bg-slate-100 dark:bg-slate-800 p-3 rounded-t font-semibold text-sm" style={{ gridColumn: '1 / -1' }}>
                             <div className="text-center text-xs text-muted-foreground">Week Schedule</div>
                           </div>
@@ -596,6 +599,7 @@ export default function Schedules() {
                                 if (schedulesAtTime.length === 0) {
                                   // Empty cell
                                   cells.push(
+                                    /* eslint-disable-next-line react/forbid-dom-props */
                                     <div
                                       key={cellKey}
                                       className="border border-border rounded bg-background hover:bg-muted/30 transition-colors"
@@ -618,6 +622,7 @@ export default function Schedules() {
                                 
                                 // Create a container for all schedules at this time
                                 cells.push(
+                                  /* eslint-disable-next-line react/forbid-dom-props */
                                   <div
                                     key={cellKey}
                                     className="flex flex-col gap-1"
@@ -634,6 +639,7 @@ export default function Schedules() {
                                       // Compact bookmark view for "All Teachers"
                                       if (isAllTeachersView) {
                                         return (
+                                          /* eslint-disable-next-line react/forbid-dom-props */
                                           <div
                                             key={`${cellKey}-${schedule.id}`}
                                             className={`border-2 rounded px-2 py-1 relative cursor-pointer transition-all hover:shadow-md flex-1 ${colorClass}`}
@@ -654,6 +660,7 @@ export default function Schedules() {
                                       
                                       // Full card view for specific teacher selected
                                       return (
+                                        /* eslint-disable-next-line react/forbid-dom-props */
                                         <div
                                           key={`${cellKey}-${schedule.id}`}
                                           className={`border-2 rounded p-2 relative group cursor-pointer transition-all hover:shadow-lg flex-1 ${colorClass} ${

@@ -26,6 +26,8 @@ interface Employee {
   position_title: string;
   position_id?: string;
   salary: number;
+  salary_grade?: number;
+  step_increment?: number;
   join_date: string;
   status: string;
 }
@@ -104,6 +106,8 @@ export default function Employees() {
           position_title: r.position_title || 'N/A',
           position_id: String(r.position_id || ''),
           salary: Number(r.salary) || 0,
+          salary_grade: r.salary_grade ? Number(r.salary_grade) : undefined,
+          step_increment: r.step_increment ? Number(r.step_increment) : undefined,
           join_date: r.join_date || '',
           status: r.status || 'active'
         }));
@@ -351,33 +355,81 @@ export default function Employees() {
       className: 'hidden',
       render: () => null, // Hidden column
     },
-    ...(canViewSalary ? [{ 
-      key: 'salary', 
-      label: 'Salary', 
-      sortable: true, 
-      align: 'right' as const,
-      width: '20' as const,
-      render: (v: number) => <span className="font-semibold text-green-600 dark:text-green-400">₱{v.toLocaleString()}</span>,
-      editRender: (salaryValue: number, row: Employee, onChange, onChangeMultiple) => {
-        return (
-          <input
-            type="number"
-            autoFocus
-            value={salaryValue ?? row.salary ?? 0}
-            onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
-            onBlur={() => onChangeMultiple?.({ salary: salaryValue ?? row.salary ?? 0 } as Partial<Employee>)}
-            placeholder="Salary"
-            className="h-8 px-2 py-1 border border-green-500 rounded-md bg-white dark:bg-gray-900 text-sm font-medium focus:ring-2 focus:ring-green-400 focus:border-transparent min-w-[150px]"
-            style={{ 
-              width: '150px',
-              appearance: 'textfield'
-            } as any}
-            step="0.01"
-            min="0"
-          />
-        );
+    ...(canViewSalary ? [
+      { 
+        key: 'salary_grade', 
+        label: 'SG', 
+        sortable: true, 
+        align: 'center' as const,
+        width: '10' as const,
+        render: (v: number | undefined) => v ? <Badge variant="outline" className="font-mono">{v}</Badge> : <span className="text-xs text-gray-400">-</span>,
+        editRender: (gradeValue: number | undefined, row: Employee, onChange, onChangeMultiple) => {
+          return (
+            <input
+              type="number"
+              autoFocus
+              value={gradeValue ?? row.salary_grade ?? ''}
+              onChange={(e) => onChange(e.target.value ? parseInt(e.target.value) : undefined)}
+              onBlur={() => onChangeMultiple?.({ salary_grade: gradeValue ?? row.salary_grade } as Partial<Employee>)}
+              placeholder="SG"
+              min="11"
+              max="33"
+              className="h-8 w-16 px-2 py-1 border border-blue-500 rounded-md bg-white dark:bg-gray-900 text-sm font-medium focus:ring-2 focus:ring-blue-400 focus:border-transparent text-center"
+            />
+          );
+        }
+      },
+      { 
+        key: 'step_increment', 
+        label: 'Step', 
+        sortable: true, 
+        align: 'center' as const,
+        width: '10' as const,
+        render: (v: number | undefined) => v ? <Badge variant="secondary" className="font-mono">{v}</Badge> : <span className="text-xs text-gray-400">-</span>,
+        editRender: (stepValue: number | undefined, row: Employee, onChange, onChangeMultiple) => {
+          return (
+            <input
+              type="number"
+              autoFocus
+              value={stepValue ?? row.step_increment ?? ''}
+              onChange={(e) => onChange(e.target.value ? parseInt(e.target.value) : undefined)}
+              onBlur={() => onChangeMultiple?.({ step_increment: stepValue ?? row.step_increment } as Partial<Employee>)}
+              placeholder="Step"
+              min="1"
+              max="8"
+              className="h-8 w-16 px-2 py-1 border border-blue-500 rounded-md bg-white dark:bg-gray-900 text-sm font-medium focus:ring-2 focus:ring-blue-400 focus:border-transparent text-center"
+            />
+          );
+        }
+      },
+      { 
+        key: 'salary', 
+        label: 'Salary', 
+        sortable: true, 
+        align: 'right' as const,
+        width: '20' as const,
+        render: (v: number) => <span className="font-semibold text-green-600 dark:text-green-400">₱{v.toLocaleString()}</span>,
+        editRender: (salaryValue: number, row: Employee, onChange, onChangeMultiple) => {
+          return (
+            <input
+              type="number"
+              autoFocus
+              value={salaryValue ?? row.salary ?? 0}
+              onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
+              onBlur={() => onChangeMultiple?.({ salary: salaryValue ?? row.salary ?? 0 } as Partial<Employee>)}
+              placeholder="Salary"
+              className="h-8 px-2 py-1 border border-green-500 rounded-md bg-white dark:bg-gray-900 text-sm font-medium focus:ring-2 focus:ring-green-400 focus:border-transparent min-w-[150px]"
+              style={{ 
+                width: '150px',
+                appearance: 'textfield'
+              } as any}
+              step="0.01"
+              min="0"
+            />
+          );
+        }
       }
-    }] : []),
+    ] : []),
     { 
       key: 'join_date', 
       label: 'Join Date', 

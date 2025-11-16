@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Users, Clock, DollarSign, LogOut, Building2, CalendarDays, BookOpen, Calendar, Building } from 'lucide-react';
+import { LayoutDashboard, Users, Clock, DollarSign, LogOut, Building2, CalendarDays, BookOpen, Calendar, Building, TrendingUp, Calculator } from 'lucide-react';
 
 interface LayoutProps {
   children: ReactNode;
@@ -27,6 +27,9 @@ export function Layout({ children }: LayoutProps) {
     { name: 'Rooms', href: '/rooms', icon: Building, roles: ['admin', 'hr'] },
     { name: 'Attendance', href: '/attendance', icon: Clock, roles: ['admin', 'hr'] },
     { name: 'Payroll', href: '/payroll', icon: DollarSign, roles: ['admin', 'hr'] },
+    { name: 'Payroll Periods', href: '/payroll-periods', icon: CalendarDays, roles: ['admin', 'hr'] },
+    { name: 'Deductions', href: '/deductions', icon: Calculator, roles: ['admin', 'hr'] },
+    { name: 'Salary Grades', href: '/salary-grades', icon: TrendingUp, roles: ['admin', 'hr'] },
     { name: 'Departments', href: '/departments', icon: Building2, roles: ['admin'] },
   ];
 

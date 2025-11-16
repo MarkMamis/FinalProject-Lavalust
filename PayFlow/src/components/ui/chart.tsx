@@ -181,6 +181,7 @@ const ChartTooltipContent = React.forwardRef<
                       <itemConfig.icon />
                     ) : (
                       !hideIndicator && (
+                        /* eslint-disable-next-line react/forbid-dom-props */
                         <div
                           className={cn("shrink-0 rounded-[2px] border-[--color-border] bg-[--color-bg]", {
                             "h-2.5 w-2.5": indicator === "dot",
@@ -258,6 +259,7 @@ const ChartLegendContent = React.forwardRef<
             {itemConfig?.icon && !hideIcon ? (
               <itemConfig.icon />
             ) : (
+              /* eslint-disable-next-line react/forbid-dom-props */
               <div
                 className="h-2 w-2 shrink-0 rounded-[2px]"
                 style={{

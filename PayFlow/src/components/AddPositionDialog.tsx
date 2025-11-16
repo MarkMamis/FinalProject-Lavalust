@@ -8,12 +8,13 @@ import { useToast } from '@/hooks/use-toast';
 
 interface AddPositionDialogProps {
   departmentId: string;
-  onAddPosition: (departmentId: string, positionTitle: string) => void;
+  onAddPosition: (departmentId: string, positionTitle: string, salaryGrade?: number) => void;
 }
 
 export function AddPositionDialog({ departmentId, onAddPosition }: AddPositionDialogProps) {
   const [open, setOpen] = useState(false);
   const [positionTitle, setPositionTitle] = useState('');
+  const [salaryGrade, setSalaryGrade] = useState('');
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -28,7 +29,7 @@ export function AddPositionDialog({ departmentId, onAddPosition }: AddPositionDi
       return;
     }
 
-    onAddPosition(departmentId, positionTitle);
+    onAddPosition(departmentId, positionTitle, salaryGrade ? parseInt(salaryGrade) : undefined);
 
     toast({
       title: "Success",
@@ -36,6 +37,7 @@ export function AddPositionDialog({ departmentId, onAddPosition }: AddPositionDi
     });
 
     setPositionTitle('');
+    setSalaryGrade('');
     setOpen(false);
   };
 
@@ -63,6 +65,19 @@ export function AddPositionDialog({ departmentId, onAddPosition }: AddPositionDi
               value={positionTitle}
               onChange={(e) => setPositionTitle(e.target.value)}
             />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="salary_grade">Salary Grade (Optional)</Label>
+            <Input
+              id="salary_grade"
+              type="number"
+              min="11"
+              max="33"
+              placeholder="11-33"
+              value={salaryGrade}
+              onChange={(e) => setSalaryGrade(e.target.value)}
+            />
+            <p className="text-xs text-gray-500">SSL IV: SG 11-33 for faculty positions</p>
           </div>
           <div className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>

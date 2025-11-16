@@ -108,6 +108,7 @@ const SidebarProvider = React.forwardRef<
   return (
     <SidebarContext.Provider value={contextValue}>
       <TooltipProvider delayDuration={0}>
+        {/* eslint-disable-next-line react/forbid-dom-props */}
         <div
           style={
             {

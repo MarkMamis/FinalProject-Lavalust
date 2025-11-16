@@ -15,10 +15,13 @@ import AdminDashboard from './pages/admin/Dashboard';
 import AdminEmployees from './pages/admin/Employees';
 import AdminAttendance from './pages/admin/Attendance';
 import AdminPayroll from './pages/admin/Payroll';
+import AdminPayrollPeriods from './pages/admin/PayrollPeriods';
 import AdminDepartments from './pages/admin/Departments';
 import AdminSubjects from './pages/admin/Subjects';
 import AdminSchedules from './pages/admin/Schedules';
 import AdminRooms from './pages/admin/Rooms';
+import AdminSalaryGrades from './pages/admin/SalaryGrades';
+import AdminDeductions from './pages/admin/Deductions';
 
 // Employee Pages
 import EmployeeDashboard from './pages/employee/Dashboard';
@@ -79,6 +82,9 @@ const App = () => (
             <Route path="/employees" element={<RoleBasedRoute allowedRoles={['admin', 'hr']}><AdminEmployees /></RoleBasedRoute>} />
             <Route path="/attendance" element={<RoleBasedRoute allowedRoles={['admin', 'hr']}><AdminAttendance /></RoleBasedRoute>} />
             <Route path="/payroll" element={<RoleBasedRoute allowedRoles={['admin', 'hr']}><AdminPayroll /></RoleBasedRoute>} />
+            <Route path="/payroll-periods" element={<RoleBasedRoute allowedRoles={['admin', 'hr']}><AdminPayrollPeriods /></RoleBasedRoute>} />
+            <Route path="/deductions" element={<RoleBasedRoute allowedRoles={['admin', 'hr']}><AdminDeductions /></RoleBasedRoute>} />
+            <Route path="/salary-grades" element={<RoleBasedRoute allowedRoles={['admin', 'hr']}><AdminSalaryGrades /></RoleBasedRoute>} />
             <Route path="/departments" element={<RoleBasedRoute allowedRoles={['admin']}><AdminDepartments /></RoleBasedRoute>} />
             <Route path="/subjects" element={<RoleBasedRoute allowedRoles={['admin', 'hr']}><AdminSubjects /></RoleBasedRoute>} />
             <Route path="/schedules" element={<RoleBasedRoute allowedRoles={['admin', 'hr']}><AdminSchedules /></RoleBasedRoute>} />

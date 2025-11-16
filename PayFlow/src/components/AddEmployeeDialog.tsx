@@ -30,6 +30,8 @@ export function AddEmployeeDialog({ onAddEmployee }: AddEmployeeDialogProps) {
     department_id: '',
     position_id: '',
     salary: '',
+    salary_grade: '',
+    step_increment: '1',
     join_date: new Date().toISOString().split('T')[0],
   });
   const { toast } = useToast();
@@ -100,6 +102,8 @@ export function AddEmployeeDialog({ onAddEmployee }: AddEmployeeDialogProps) {
         department_id: parseInt(formData.department_id),
         position_id: parseInt(formData.position_id),
         salary: salary,
+        salary_grade: formData.salary_grade ? parseInt(formData.salary_grade) : undefined,
+        step_increment: formData.step_increment ? parseInt(formData.step_increment) : 1,
         join_date: formData.join_date,
       })
     })
@@ -117,6 +121,8 @@ export function AddEmployeeDialog({ onAddEmployee }: AddEmployeeDialogProps) {
           department_id: '',
           position_id: '',
           salary: '',
+          salary_grade: '',
+          step_increment: '1',
           join_date: new Date().toISOString().split('T')[0],
         });
         setOpen(false);
@@ -220,6 +226,36 @@ export function AddEmployeeDialog({ onAddEmployee }: AddEmployeeDialogProps) {
                 ))}
               </SelectContent>
             </Select>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="salary_grade">Salary Grade (SG)</Label>
+              <Input
+                id="salary_grade"
+                type="number"
+                min="11"
+                max="33"
+                placeholder="11-33"
+                value={formData.salary_grade}
+                onChange={(e) => setFormData({ ...formData, salary_grade: e.target.value })}
+              />
+              <p className="text-xs text-gray-500">SSL IV: SG 11-33</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="step_increment">Step Increment</Label>
+              <Input
+                id="step_increment"
+                type="number"
+                min="1"
+                max="8"
+                placeholder="1-8"
+                value={formData.step_increment}
+                onChange={(e) => setFormData({ ...formData, step_increment: e.target.value })}
+              />
+              <p className="text-xs text-gray-500">Steps 1-8</p>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
